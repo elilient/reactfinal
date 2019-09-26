@@ -1,0 +1,1900 @@
+{
+  "variables": [],
+  "info": {
+    "name": "Conduit API Tests",
+    "_postman_id": "dda3e595-02d7-bf12-2a43-3daea0970192",
+    "description": "Collection for testing the Conduit API\n\nhttps://github.com/gothinkster/realworld",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+  },
+  "item": [{
+      "name": "Auth",
+      "description": "",
+      "item": [{
+          "name": "Register",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "if (!(environment.isIntegrationTest)) {",
+                "var responseJSON = JSON.parse(responseBody);",
+                "",
+                "tests['Response contains \"user\" property'] = responseJSON.hasOwnProperty('user');",
+                "",
+                "var user = responseJSON.user || {};",
+                "",
+                "tests['User has \"email\" property'] = user.hasOwnProperty('email');",
+                "tests['User has \"username\" property'] = user.hasOwnProperty('username');",
+                "tests['User has \"token\" property'] = user.hasOwnProperty('token');",
+                "}",
+                ""
+              ]
+            }
+          }],
+          "request": {
+            "url": "{{apiUrl}}/users",
+            "method": "POST",
+            "header": [{
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "XMLHttpRequest",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"user\":{\"email\":\"john@jacob.com\", \"password\":\"johnnyjacob\", \"username\":\"johnjacob\"}}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Login",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "var responseJSON = JSON.parse(responseBody);",
+                "",
+                "tests['Response contains \"user\" property'] = responseJSON.hasOwnProperty('user');",
+                "",
+                "var user = responseJSON.user || {};",
+                "",
+                "tests['User has \"email\" property'] = user.hasOwnProperty('email');",
+                "tests['User has \"username\" property'] = user.hasOwnProperty('username');",
+                "tests['User has \"token\" property'] = user.hasOwnProperty('token');",
+                ""
+              ]
+            }
+          }],
+          "request": {
+            "url": "{{apiUrl}}/users/login",
+            "method": "POST",
+            "header": [{
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "XMLHttpRequest",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"user\":{\"email\":\"john@jacob.com\", \"password\":\"johnnyjacob\"}}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Login and Remember Token",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "var responseJSON = JSON.parse(responseBody);",
+                "",
+                "tests['Response contains \"user\" property'] = responseJSON.hasOwnProperty('user');",
+                "",
+                "var user = responseJSON.user || {};",
+                "",
+                "tests['User has \"email\" property'] = user.hasOwnProperty('email');",
+                "tests['User has \"username\" property'] = user.hasOwnProperty('username');",
+                "tests['User has \"token\" property'] = user.hasOwnProperty('token');",
+                "",
+                "if(tests['User has \"token\" property']){",
+                "    postman.setEnvironmentVariable('token', user.token);",
+                "}",
+                "",
+                "tests['Environment variable \"token\" has been set'] = environment.token === user.token;",
+                ""
+              ]
+            }
+          }],
+          "request": {
+            "url": "{{apiUrl}}/users/login",
+            "method": "POST",
+            "header": [{
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "XMLHttpRequest",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"user\":{\"email\":\"john@jacob.com\", \"password\":\"johnnyjacob\"}}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Current User",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "var responseJSON = JSON.parse(responseBody);",
+                "",
+                "tests['Response contains \"user\" property'] = responseJSON.hasOwnProperty('user');",
+                "",
+                "var user = responseJSON.user || {};",
+                "",
+                "tests['User has \"email\" property'] = user.hasOwnProperty('email');",
+                "tests['User has \"username\" property'] = user.hasOwnProperty('username');",
+                "tests['User has \"token\" property'] = user.hasOwnProperty('token');",
+                ""
+              ]
+            }
+          }],
+          "request": {
+            "url": "{{apiUrl}}/user",
+            "method": "GET",
+            "header": [{
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "XMLHttpRequest",
+                "description": ""
+              },
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}",
+                "description": ""
+              }
+            ],
+            "body": {},
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Update User",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "var responseJSON = JSON.parse(responseBody);",
+                "",
+                "tests['Response contains \"user\" property'] = responseJSON.hasOwnProperty('user');",
+                "",
+                "var user = responseJSON.user || {};",
+                "",
+                "tests['User has \"email\" property'] = user.hasOwnProperty('email');",
+                "tests['User has \"username\" property'] = user.hasOwnProperty('username');",
+                "tests['User has \"token\" property'] = user.hasOwnProperty('token');",
+                ""
+              ]
+            }
+          }],
+          "request": {
+            "url": "{{apiUrl}}/user",
+            "method": "PUT",
+            "header": [{
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "XMLHttpRequest",
+                "description": ""
+              },
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"user\":{\"email\":\"john@jacob.com\"}}"
+            },
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Films with authentication",
+      "description": "",
+      "item": [{
+          "name": "Feed",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "var is200Response = responseCode.code === 200;",
+                "",
+                "tests['Response code is 200 OK'] = is200Response;",
+                "",
+                "if(is200Response){",
+                "    var responseJSON = JSON.parse(responseBody);",
+                "",
+                "    tests['Response contains \"films\" property'] = responseJSON.hasOwnProperty('films');",
+                "    tests['Response contains \"filmsCount\" property'] = responseJSON.hasOwnProperty('filmsCount');",
+                "    tests['filmsCount is an integer'] = Number.isInteger(responseJSON.filmsCount);",
+                "",
+                "    if(responseJSON.films.length){",
+                "        var film = responseJSON.films[0];",
+                "",
+                "        tests['Film has \"title\" property'] = film.hasOwnProperty('title');",
+                "        tests['Film has \"slug\" property'] = film.hasOwnProperty('slug');",
+                "        tests['Film has \"body\" property'] = film.hasOwnProperty('body');",
+                "        tests['Film has \"createdAt\" property'] = film.hasOwnProperty('createdAt');",
+                "        tests['Film\\'s \"createdAt\" property is an ISO 8601 timestamp'] = new Date(film.createdAt).toISOString() === film.createdAt;",
+                "        tests['Film has \"updatedAt\" property'] = film.hasOwnProperty('updatedAt');",
+                "        tests['Film\\'s \"updatedAt\" property is an ISO 8601 timestamp'] = new Date(film.updatedAt).toISOString() === film.updatedAt;",
+                "        tests['Film has \"description\" property'] = film.hasOwnProperty('description');",
+                "        tests['Film has \"tagList\" property'] = film.hasOwnProperty('tagList');",
+                "        tests['Film\\'s \"tagList\" property is an Array'] = Array.isArray(film.tagList);",
+                "        tests['Film has \"author\" property'] = film.hasOwnProperty('author');",
+                "        tests['Film has \"favorited\" property'] = film.hasOwnProperty('favorited');",
+                "        tests['Film has \"favoritesCount\" property'] = film.hasOwnProperty('favoritesCount');",
+                "        tests['favoritesCount is an integer'] = Number.isInteger(film.favoritesCount);",
+                "    } else {",
+                "        tests['filmsCount is 0 when feed is empty'] = responseJSON.filmsCount === 0;",
+                "    }",
+                "}",
+                ""
+              ]
+            }
+          }],
+          "request": {
+            "url": "{{apiUrl}}/films/feed",
+            "method": "GET",
+            "header": [{
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "XMLHttpRequest",
+                "description": ""
+              },
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "All Films",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "var is200Response = responseCode.code === 200;",
+                "",
+                "tests['Response code is 200 OK'] = is200Response;",
+                "",
+                "if(is200Response){",
+                "    var responseJSON = JSON.parse(responseBody);",
+                "",
+                "    tests['Response contains \"films\" property'] = responseJSON.hasOwnProperty('films');",
+                "    tests['Response contains \"filmsCount\" property'] = responseJSON.hasOwnProperty('filmsCount');",
+                "    tests['filmsCount is an integer'] = Number.isInteger(responseJSON.filmsCount);",
+                "",
+                "    if(responseJSON.films.length){",
+                "        var film = responseJSON.films[0];",
+                "",
+                "        tests['Film has \"title\" property'] = film.hasOwnProperty('title');",
+                "        tests['Film has \"slug\" property'] = film.hasOwnProperty('slug');",
+                "        tests['Film has \"body\" property'] = film.hasOwnProperty('body');",
+                "        tests['Film has \"createdAt\" property'] = film.hasOwnProperty('createdAt');",
+                "        tests['Film\\'s \"createdAt\" property is an ISO 8601 timestamp'] = new Date(film.createdAt).toISOString() === film.createdAt;",
+                "        tests['Film has \"updatedAt\" property'] = film.hasOwnProperty('updatedAt');",
+                "        tests['Film\\'s \"updatedAt\" property is an ISO 8601 timestamp'] = new Date(film.updatedAt).toISOString() === film.updatedAt;",
+                "        tests['Film has \"description\" property'] = film.hasOwnProperty('description');",
+                "        tests['Film has \"tagList\" property'] = film.hasOwnProperty('tagList');",
+                "        tests['Film\\'s \"tagList\" property is an Array'] = Array.isArray(film.tagList);",
+                "        tests['Film has \"author\" property'] = film.hasOwnProperty('author');",
+                "        tests['Film has \"favorited\" property'] = film.hasOwnProperty('favorited');",
+                "        tests['Film has \"favoritesCount\" property'] = film.hasOwnProperty('favoritesCount');",
+                "        tests['favoritesCount is an integer'] = Number.isInteger(film.favoritesCount);",
+                "    } else {",
+                "        tests['filmsCount is 0 when feed is empty'] = responseJSON.filmsCount === 0;",
+                "    }",
+                "}",
+                ""
+              ]
+            }
+          }],
+          "request": {
+            "url": "{{apiUrl}}/films",
+            "method": "GET",
+            "header": [{
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "XMLHttpRequest",
+                "description": ""
+              },
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "All Films with auth",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "var is200Response = responseCode.code === 200;",
+                "",
+                "tests['Response code is 200 OK'] = is200Response;",
+                "",
+                "if(is200Response){",
+                "    var responseJSON = JSON.parse(responseBody);",
+                "",
+                "    tests['Response contains \"films\" property'] = responseJSON.hasOwnProperty('films');",
+                "    tests['Response contains \"filmsCount\" property'] = responseJSON.hasOwnProperty('filmsCount');",
+                "    tests['filmsCount is an integer'] = Number.isInteger(responseJSON.filmsCount);",
+                "",
+                "    if(responseJSON.films.length){",
+                "        var film = responseJSON.films[0];",
+                "",
+                "        tests['Film has \"title\" property'] = film.hasOwnProperty('title');",
+                "        tests['Film has \"slug\" property'] = film.hasOwnProperty('slug');",
+                "        tests['Film has \"body\" property'] = film.hasOwnProperty('body');",
+                "        tests['Film has \"createdAt\" property'] = film.hasOwnProperty('createdAt');",
+                "        tests['Film\\'s \"createdAt\" property is an ISO 8601 timestamp'] = new Date(film.createdAt).toISOString() === film.createdAt;",
+                "        tests['Film has \"updatedAt\" property'] = film.hasOwnProperty('updatedAt');",
+                "        tests['Film\\'s \"updatedAt\" property is an ISO 8601 timestamp'] = new Date(film.updatedAt).toISOString() === film.updatedAt;",
+                "        tests['Film has \"description\" property'] = film.hasOwnProperty('description');",
+                "        tests['Film has \"tagList\" property'] = film.hasOwnProperty('tagList');",
+                "        tests['Film\\'s \"tagList\" property is an Array'] = Array.isArray(film.tagList);",
+                "        tests['Film has \"author\" property'] = film.hasOwnProperty('author');",
+                "        tests['Film has \"favorited\" property'] = film.hasOwnProperty('favorited');",
+                "        tests['Film has \"favoritesCount\" property'] = film.hasOwnProperty('favoritesCount');",
+                "        tests['favoritesCount is an integer'] = Number.isInteger(film.favoritesCount);",
+                "    } else {",
+                "        tests['filmsCount is 0 when feed is empty'] = responseJSON.filmsCount === 0;",
+                "    }",
+                "}",
+                ""
+              ]
+            }
+          }],
+          "request": {
+            "url": "{{apiUrl}}/films",
+            "method": "GET",
+            "header": [{
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "XMLHttpRequest",
+                "description": ""
+              },
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Films by Author",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "var is200Response = responseCode.code === 200;",
+                "",
+                "tests['Response code is 200 OK'] = is200Response;",
+                "",
+                "if(is200Response){",
+                "    var responseJSON = JSON.parse(responseBody);",
+                "",
+                "    tests['Response contains \"films\" property'] = responseJSON.hasOwnProperty('films');",
+                "    tests['Response contains \"filmsCount\" property'] = responseJSON.hasOwnProperty('filmsCount');",
+                "    tests['filmsCount is an integer'] = Number.isInteger(responseJSON.filmsCount);",
+                "",
+                "    if(responseJSON.films.length){",
+                "        var film = responseJSON.films[0];",
+                "",
+                "        tests['Film has \"title\" property'] = film.hasOwnProperty('title');",
+                "        tests['Film has \"slug\" property'] = film.hasOwnProperty('slug');",
+                "        tests['Film has \"body\" property'] = film.hasOwnProperty('body');",
+                "        tests['Film has \"createdAt\" property'] = film.hasOwnProperty('createdAt');",
+                "        tests['Film\\'s \"createdAt\" property is an ISO 8601 timestamp'] = new Date(film.createdAt).toISOString() === film.createdAt;",
+                "        tests['Film has \"updatedAt\" property'] = film.hasOwnProperty('updatedAt');",
+                "        tests['Film\\'s \"updatedAt\" property is an ISO 8601 timestamp'] = new Date(film.updatedAt).toISOString() === film.updatedAt;",
+                "        tests['Film has \"description\" property'] = film.hasOwnProperty('description');",
+                "        tests['Film has \"tagList\" property'] = film.hasOwnProperty('tagList');",
+                "        tests['Film\\'s \"tagList\" property is an Array'] = Array.isArray(film.tagList);",
+                "        tests['Film has \"author\" property'] = film.hasOwnProperty('author');",
+                "        tests['Film has \"favorited\" property'] = film.hasOwnProperty('favorited');",
+                "        tests['Film has \"favoritesCount\" property'] = film.hasOwnProperty('favoritesCount');",
+                "        tests['favoritesCount is an integer'] = Number.isInteger(film.favoritesCount);",
+                "    } else {",
+                "        tests['filmsCount is 0 when feed is empty'] = responseJSON.filmsCount === 0;",
+                "    }",
+                "}",
+                ""
+              ]
+            }
+          }],
+          "request": {
+            "url": {
+              "raw": "{{apiUrl}}/films?author=johnjacob",
+              "host": [
+                "{{apiUrl}}"
+              ],
+              "path": [
+                "films"
+              ],
+              "query": [{
+                "key": "author",
+                "value": "johnjacob"
+              }],
+              "variable": []
+            },
+            "method": "GET",
+            "header": [{
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "XMLHttpRequest",
+                "description": ""
+              },
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Films by Author with auth",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "var is200Response = responseCode.code === 200;",
+                "",
+                "tests['Response code is 200 OK'] = is200Response;",
+                "",
+                "if(is200Response){",
+                "    var responseJSON = JSON.parse(responseBody);",
+                "",
+                "    tests['Response contains \"films\" property'] = responseJSON.hasOwnProperty('films');",
+                "    tests['Response contains \"filmsCount\" property'] = responseJSON.hasOwnProperty('filmsCount');",
+                "    tests['filmsCount is an integer'] = Number.isInteger(responseJSON.filmsCount);",
+                "",
+                "    if(responseJSON.films.length){",
+                "        var film = responseJSON.films[0];",
+                "",
+                "        tests['Film has \"title\" property'] = film.hasOwnProperty('title');",
+                "        tests['Film has \"slug\" property'] = film.hasOwnProperty('slug');",
+                "        tests['Film has \"body\" property'] = film.hasOwnProperty('body');",
+                "        tests['Film has \"createdAt\" property'] = film.hasOwnProperty('createdAt');",
+                "        tests['Film\\'s \"createdAt\" property is an ISO 8601 timestamp'] = new Date(film.createdAt).toISOString() === film.createdAt;",
+                "        tests['Film has \"updatedAt\" property'] = film.hasOwnProperty('updatedAt');",
+                "        tests['Film\\'s \"updatedAt\" property is an ISO 8601 timestamp'] = new Date(film.updatedAt).toISOString() === film.updatedAt;",
+                "        tests['Film has \"description\" property'] = film.hasOwnProperty('description');",
+                "        tests['Film has \"tagList\" property'] = film.hasOwnProperty('tagList');",
+                "        tests['Film\\'s \"tagList\" property is an Array'] = Array.isArray(film.tagList);",
+                "        tests['Film has \"author\" property'] = film.hasOwnProperty('author');",
+                "        tests['Film has \"favorited\" property'] = film.hasOwnProperty('favorited');",
+                "        tests['Film has \"favoritesCount\" property'] = film.hasOwnProperty('favoritesCount');",
+                "        tests['favoritesCount is an integer'] = Number.isInteger(film.favoritesCount);",
+                "    } else {",
+                "        tests['filmsCount is 0 when feed is empty'] = responseJSON.filmsCount === 0;",
+                "    }",
+                "}",
+                ""
+              ]
+            }
+          }],
+          "request": {
+            "url": {
+              "raw": "{{apiUrl}}/films?author=johnjacob",
+              "host": [
+                "{{apiUrl}}"
+              ],
+              "path": [
+                "films"
+              ],
+              "query": [{
+                "key": "author",
+                "value": "johnjacob",
+                "equals": true,
+                "description": ""
+              }],
+              "variable": []
+            },
+            "method": "GET",
+            "header": [{
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "XMLHttpRequest",
+                "description": ""
+              },
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}",
+                "description": ""
+              }
+            ],
+            "body": {},
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Films Favorited by Username",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "var is200Response = responseCode.code === 200;",
+                "",
+                "tests['Response code is 200 OK'] = is200Response;",
+                "",
+                "if(is200Response){",
+                "    var responseJSON = JSON.parse(responseBody);",
+                "    ",
+                "    tests['Response contains \"films\" property'] = responseJSON.hasOwnProperty('films');",
+                "    tests['Response contains \"filmsCount\" property'] = responseJSON.hasOwnProperty('filmsCount');",
+                "    tests['filmsCount is an integer'] = Number.isInteger(responseJSON.filmsCount);",
+                "",
+                "    if(responseJSON.films.length){",
+                "        var film = responseJSON.films[0];",
+                "",
+                "        tests['Film has \"title\" property'] = film.hasOwnProperty('title');",
+                "        tests['Film has \"slug\" property'] = film.hasOwnProperty('slug');",
+                "        tests['Film has \"body\" property'] = film.hasOwnProperty('body');",
+                "        tests['Film has \"createdAt\" property'] = film.hasOwnProperty('createdAt');",
+                "        tests['Film\\'s \"createdAt\" property is an ISO 8601 timestamp'] = new Date(film.createdAt).toISOString() === film.createdAt;",
+                "        tests['Film has \"updatedAt\" property'] = film.hasOwnProperty('updatedAt');",
+                "        tests['Film\\'s \"updatedAt\" property is an ISO 8601 timestamp'] = new Date(film.updatedAt).toISOString() === film.updatedAt;",
+                "        tests['Film has \"description\" property'] = film.hasOwnProperty('description');",
+                "        tests['Film has \"tagList\" property'] = film.hasOwnProperty('tagList');",
+                "        tests['Film\\'s \"tagList\" property is an Array'] = Array.isArray(film.tagList);",
+                "        tests['Film has \"author\" property'] = film.hasOwnProperty('author');",
+                "        tests['Film has \"favorited\" property'] = film.hasOwnProperty('favorited');",
+                "        tests['Film has \"favoritesCount\" property'] = film.hasOwnProperty('favoritesCount');",
+                "        tests['favoritesCount is an integer'] = Number.isInteger(film.favoritesCount);",
+                "    } else {",
+                "        tests['filmsCount is 0 when feed is empty'] = responseJSON.filmsCount === 0;",
+                "    }",
+                "}",
+                ""
+              ]
+            }
+          }],
+          "request": {
+            "url": {
+              "raw": "{{apiUrl}}/films?favorited=jane",
+              "host": [
+                "{{apiUrl}}"
+              ],
+              "path": [
+                "films"
+              ],
+              "query": [{
+                "key": "favorited",
+                "value": "jane"
+              }],
+              "variable": []
+            },
+            "method": "GET",
+            "header": [{
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "XMLHttpRequest",
+                "description": ""
+              },
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Films Favorited by Username with auth",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "var is200Response = responseCode.code === 200;",
+                "",
+                "tests['Response code is 200 OK'] = is200Response;",
+                "",
+                "if(is200Response){",
+                "    var responseJSON = JSON.parse(responseBody);",
+                "    ",
+                "    tests['Response contains \"films\" property'] = responseJSON.hasOwnProperty('films');",
+                "    tests['Response contains \"filmsCount\" property'] = responseJSON.hasOwnProperty('filmsCount');",
+                "    tests['filmsCount is an integer'] = Number.isInteger(responseJSON.filmsCount);",
+                "",
+                "    if(responseJSON.films.length){",
+                "        var film = responseJSON.films[0];",
+                "",
+                "        tests['Film has \"title\" property'] = film.hasOwnProperty('title');",
+                "        tests['Film has \"slug\" property'] = film.hasOwnProperty('slug');",
+                "        tests['Film has \"body\" property'] = film.hasOwnProperty('body');",
+                "        tests['Film has \"createdAt\" property'] = film.hasOwnProperty('createdAt');",
+                "        tests['Film\\'s \"createdAt\" property is an ISO 8601 timestamp'] = new Date(film.createdAt).toISOString() === film.createdAt;",
+                "        tests['Film has \"updatedAt\" property'] = film.hasOwnProperty('updatedAt');",
+                "        tests['Film\\'s \"updatedAt\" property is an ISO 8601 timestamp'] = new Date(film.updatedAt).toISOString() === film.updatedAt;",
+                "        tests['Film has \"description\" property'] = film.hasOwnProperty('description');",
+                "        tests['Film has \"tagList\" property'] = film.hasOwnProperty('tagList');",
+                "        tests['Film\\'s \"tagList\" property is an Array'] = Array.isArray(film.tagList);",
+                "        tests['Film has \"author\" property'] = film.hasOwnProperty('author');",
+                "        tests['Film has \"favorited\" property'] = film.hasOwnProperty('favorited');",
+                "        tests['Film has \"favoritesCount\" property'] = film.hasOwnProperty('favoritesCount');",
+                "        tests['favoritesCount is an integer'] = Number.isInteger(film.favoritesCount);",
+                "    } else {",
+                "        tests['filmsCount is 0 when feed is empty'] = responseJSON.filmsCount === 0;",
+                "    }",
+                "}",
+                ""
+              ]
+            }
+          }],
+          "request": {
+            "url": {
+              "raw": "{{apiUrl}}/films?favorited=jane",
+              "host": [
+                "{{apiUrl}}"
+              ],
+              "path": [
+                "films"
+              ],
+              "query": [{
+                "key": "favorited",
+                "value": "jane"
+              }],
+              "variable": []
+            },
+            "method": "GET",
+            "header": [{
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "XMLHttpRequest",
+                "description": ""
+              },
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Films by Tag",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "var is200Response = responseCode.code === 200;",
+                "",
+                "tests['Response code is 200 OK'] = is200Response;",
+                "",
+                "if(is200Response){",
+                "    var responseJSON = JSON.parse(responseBody);",
+                "",
+                "    tests['Response contains \"films\" property'] = responseJSON.hasOwnProperty('films');",
+                "    tests['Response contains \"filmsCount\" property'] = responseJSON.hasOwnProperty('filmsCount');",
+                "    tests['filmsCount is an integer'] = Number.isInteger(responseJSON.filmsCount);",
+                "",
+                "    if(responseJSON.films.length){",
+                "        var film = responseJSON.films[0];",
+                "",
+                "        tests['Film has \"title\" property'] = film.hasOwnProperty('title');",
+                "        tests['Film has \"slug\" property'] = film.hasOwnProperty('slug');",
+                "        tests['Film has \"body\" property'] = film.hasOwnProperty('body');",
+                "        tests['Film has \"createdAt\" property'] = film.hasOwnProperty('createdAt');",
+                "        tests['Film\\'s \"createdAt\" property is an ISO 8601 timestamp'] = new Date(film.createdAt).toISOString() === film.createdAt;",
+                "        tests['Film has \"updatedAt\" property'] = film.hasOwnProperty('updatedAt');",
+                "        tests['Film\\'s \"updatedAt\" property is an ISO 8601 timestamp'] = new Date(film.updatedAt).toISOString() === film.updatedAt;",
+                "        tests['Film has \"description\" property'] = film.hasOwnProperty('description');",
+                "        tests['Film has \"tagList\" property'] = film.hasOwnProperty('tagList');",
+                "        tests['Film\\'s \"tagList\" property is an Array'] = Array.isArray(film.tagList);",
+                "        tests['Film has \"author\" property'] = film.hasOwnProperty('author');",
+                "        tests['Film has \"favorited\" property'] = film.hasOwnProperty('favorited');",
+                "        tests['Film has \"favoritesCount\" property'] = film.hasOwnProperty('favoritesCount');",
+                "        tests['favoritesCount is an integer'] = Number.isInteger(film.favoritesCount);",
+                "    } else {",
+                "        tests['filmsCount is 0 when feed is empty'] = responseJSON.filmsCount === 0;",
+                "    }",
+                "}",
+                ""
+              ]
+            }
+          }],
+          "request": {
+            "url": {
+              "raw": "{{apiUrl}}/films?tag=dragons",
+              "host": [
+                "{{apiUrl}}"
+              ],
+              "path": [
+                "films"
+              ],
+              "query": [{
+                "key": "tag",
+                "value": "dragons"
+              }],
+              "variable": []
+            },
+            "method": "GET",
+            "header": [{
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "XMLHttpRequest",
+                "description": ""
+              },
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Create Film",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "var responseJSON = JSON.parse(responseBody);",
+                "",
+                "tests['Response contains \"film\" property'] = responseJSON.hasOwnProperty('film');",
+                "",
+                "var film = responseJSON.film || {};",
+                "",
+                "tests['Film has \"title\" property'] = film.hasOwnProperty('title');",
+                "tests['Film has \"slug\" property'] = film.hasOwnProperty('slug');",
+                "if(tests['Film has \"slug\" property']){",
+                "    postman.setEnvironmentVariable('slug', film.slug);",
+                "}",
+                "tests['Film has \"body\" property'] = film.hasOwnProperty('body');",
+                "tests['Film has \"createdAt\" property'] = film.hasOwnProperty('createdAt');",
+                "tests['Film\\'s \"createdAt\" property is an ISO 8601 timestamp'] = new Date(film.createdAt).toISOString() === film.createdAt;",
+                "tests['Film has \"updatedAt\" property'] = film.hasOwnProperty('updatedAt');",
+                "tests['Film\\'s \"updatedAt\" property is an ISO 8601 timestamp'] = new Date(film.updatedAt).toISOString() === film.updatedAt;",
+                "tests['Film has \"description\" property'] = film.hasOwnProperty('description');",
+                "tests['Film has \"tagList\" property'] = film.hasOwnProperty('tagList');",
+                "tests['Film\\'s \"tagList\" property is an Array'] = Array.isArray(film.tagList);",
+                "tests['Film has \"author\" property'] = film.hasOwnProperty('author');",
+                "tests['Film has \"favorited\" property'] = film.hasOwnProperty('favorited');",
+                "tests['Film has \"favoritesCount\" property'] = film.hasOwnProperty('favoritesCount');",
+                "tests['favoritesCount is an integer'] = Number.isInteger(film.favoritesCount);",
+                ""
+              ]
+            }
+          }],
+          "request": {
+            "url": "{{apiUrl}}/films",
+            "method": "POST",
+            "header": [{
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "XMLHttpRequest",
+                "description": ""
+              },
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"film\":{\"title\":\"How to train your dragon\", \"description\":\"Ever wonder how?\", \"body\":\"Very carefully.\", \"tagList\":[\"dragons\",\"training\"]}}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Single Film by slug",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "var responseJSON = JSON.parse(responseBody);",
+                "",
+                "tests['Response contains \"film\" property'] = responseJSON.hasOwnProperty('film');",
+                "",
+                "var film = responseJSON.film || {};",
+                "",
+                "tests['Film has \"title\" property'] = film.hasOwnProperty('title');",
+                "tests['Film has \"slug\" property'] = film.hasOwnProperty('slug');",
+                "tests['Film has \"body\" property'] = film.hasOwnProperty('body');",
+                "tests['Film has \"createdAt\" property'] = film.hasOwnProperty('createdAt');",
+                "tests['Film\\'s \"createdAt\" property is an ISO 8601 timestamp'] = new Date(film.createdAt).toISOString() === film.createdAt;",
+                "tests['Film has \"updatedAt\" property'] = film.hasOwnProperty('updatedAt');",
+                "tests['Film\\'s \"updatedAt\" property is an ISO 8601 timestamp'] = new Date(film.updatedAt).toISOString() === film.updatedAt;",
+                "tests['Film has \"description\" property'] = film.hasOwnProperty('description');",
+                "tests['Film has \"tagList\" property'] = film.hasOwnProperty('tagList');",
+                "tests['Film\\'s \"tagList\" property is an Array'] = Array.isArray(film.tagList);",
+                "tests['Film has \"author\" property'] = film.hasOwnProperty('author');",
+                "tests['Film has \"favorited\" property'] = film.hasOwnProperty('favorited');",
+                "tests['Film has \"favoritesCount\" property'] = film.hasOwnProperty('favoritesCount');",
+                "tests['favoritesCount is an integer'] = Number.isInteger(film.favoritesCount);",
+                ""
+              ]
+            }
+          }],
+          "request": {
+            "url": "{{apiUrl}}/films/{{slug}}",
+            "method": "GET",
+            "header": [{
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "XMLHttpRequest",
+                "description": ""
+              },
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}",
+                "description": ""
+              }
+            ],
+            "body": {},
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Update Film",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "if (!(environment.isIntegrationTest)) {",
+                "var responseJSON = JSON.parse(responseBody);",
+                "",
+                "tests['Response contains \"film\" property'] = responseJSON.hasOwnProperty('film');",
+                "",
+                "var film = responseJSON.film || {};",
+                "",
+                "tests['Film has \"title\" property'] = film.hasOwnProperty('title');",
+                "tests['Film has \"slug\" property'] = film.hasOwnProperty('slug');",
+                "tests['Film has \"body\" property'] = film.hasOwnProperty('body');",
+                "tests['Film has \"createdAt\" property'] = film.hasOwnProperty('createdAt');",
+                "tests['Film\\'s \"createdAt\" property is an ISO 8601 timestamp'] = new Date(film.createdAt).toISOString() === film.createdAt;",
+                "tests['Film has \"updatedAt\" property'] = film.hasOwnProperty('updatedAt');",
+                "tests['Film\\'s \"updatedAt\" property is an ISO 8601 timestamp'] = new Date(film.updatedAt).toISOString() === film.updatedAt;",
+                "tests['Film has \"description\" property'] = film.hasOwnProperty('description');",
+                "tests['Film has \"tagList\" property'] = film.hasOwnProperty('tagList');",
+                "tests['Film\\'s \"tagList\" property is an Array'] = Array.isArray(film.tagList);",
+                "tests['Film has \"author\" property'] = film.hasOwnProperty('author');",
+                "tests['Film has \"favorited\" property'] = film.hasOwnProperty('favorited');",
+                "tests['Film has \"favoritesCount\" property'] = film.hasOwnProperty('favoritesCount');",
+                "tests['favoritesCount is an integer'] = Number.isInteger(film.favoritesCount);",
+                "}",
+                ""
+              ]
+            }
+          }],
+          "request": {
+            "url": "{{apiUrl}}/films/{{slug}}",
+            "method": "PUT",
+            "header": [{
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "XMLHttpRequest",
+                "description": ""
+              },
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"film\":{\"body\":\"With two hands\"}}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Favorite Film",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "var responseJSON = JSON.parse(responseBody);",
+                "",
+                "tests['Response contains \"film\" property'] = responseJSON.hasOwnProperty('film');",
+                "",
+                "var film = responseJSON.film || {};",
+                "",
+                "tests['Film has \"title\" property'] = film.hasOwnProperty('title');",
+                "tests['Film has \"slug\" property'] = film.hasOwnProperty('slug');",
+                "tests['Film has \"body\" property'] = film.hasOwnProperty('body');",
+                "tests['Film has \"createdAt\" property'] = film.hasOwnProperty('createdAt');",
+                "tests['Film\\'s \"createdAt\" property is an ISO 8601 timestamp'] = new Date(film.createdAt).toISOString() === film.createdAt;",
+                "tests['Film has \"updatedAt\" property'] = film.hasOwnProperty('updatedAt');",
+                "tests['Film\\'s \"updatedAt\" property is an ISO 8601 timestamp'] = new Date(film.updatedAt).toISOString() === film.updatedAt;",
+                "tests['Film has \"description\" property'] = film.hasOwnProperty('description');",
+                "tests['Film has \"tagList\" property'] = film.hasOwnProperty('tagList');",
+                "tests['Film\\'s \"tagList\" property is an Array'] = Array.isArray(film.tagList);",
+                "tests['Film has \"author\" property'] = film.hasOwnProperty('author');",
+                "tests['Film has \"favorited\" property'] = film.hasOwnProperty('favorited');",
+                "tests[\"Film's 'favorited' property is true\"] = film.favorited === true;",
+                "tests['Film has \"favoritesCount\" property'] = film.hasOwnProperty('favoritesCount');",
+                "tests['favoritesCount is an integer'] = Number.isInteger(film.favoritesCount);",
+                "tests[\"Film's 'favoritesCount' property is greater than 0\"] = film.favoritesCount > 0;",
+                ""
+              ]
+            }
+          }],
+          "request": {
+            "url": "{{apiUrl}}/films/{{slug}}/favorite",
+            "method": "POST",
+            "header": [{
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "XMLHttpRequest",
+                "description": ""
+              },
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Unfavorite Film",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "var responseJSON = JSON.parse(responseBody);",
+                "",
+                "tests['Response contains \"film\" property'] = responseJSON.hasOwnProperty('film');",
+                "",
+                "var film = responseJSON.film || {};",
+                "",
+                "tests['Film has \"title\" property'] = film.hasOwnProperty('title');",
+                "tests['Film has \"slug\" property'] = film.hasOwnProperty('slug');",
+                "tests['Film has \"body\" property'] = film.hasOwnProperty('body');",
+                "tests['Film has \"createdAt\" property'] = film.hasOwnProperty('createdAt');",
+                "tests['Film\\'s \"createdAt\" property is an ISO 8601 timestamp'] = new Date(film.createdAt).toISOString() === film.createdAt;",
+                "tests['Film has \"updatedAt\" property'] = film.hasOwnProperty('updatedAt');",
+                "tests['Film\\'s \"updatedAt\" property is an ISO 8601 timestamp'] = new Date(film.updatedAt).toISOString() === film.updatedAt;",
+                "tests['Film has \"description\" property'] = film.hasOwnProperty('description');",
+                "tests['Film has \"tagList\" property'] = film.hasOwnProperty('tagList');",
+                "tests['Film\\'s \"tagList\" property is an Array'] = Array.isArray(film.tagList);",
+                "tests['Film has \"author\" property'] = film.hasOwnProperty('author');",
+                "tests['Film has \"favorited\" property'] = film.hasOwnProperty('favorited');",
+                "tests['Film has \"favoritesCount\" property'] = film.hasOwnProperty('favoritesCount');",
+                "tests['favoritesCount is an integer'] = Number.isInteger(film.favoritesCount);",
+                "tests[\"Film's \\\"favorited\\\" property is true\"] = film.favorited === false;",
+                ""
+              ]
+            }
+          }],
+          "request": {
+            "url": "{{apiUrl}}/films/{{slug}}/favorite",
+            "method": "DELETE",
+            "header": [{
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "XMLHttpRequest",
+                "description": ""
+              },
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Films",
+      "description": "",
+      "item": [{
+          "name": "All Films",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "var is200Response = responseCode.code === 200;",
+                "",
+                "tests['Response code is 200 OK'] = is200Response;",
+                "",
+                "if(is200Response){",
+                "    var responseJSON = JSON.parse(responseBody);",
+                "",
+                "    tests['Response contains \"films\" property'] = responseJSON.hasOwnProperty('films');",
+                "    tests['Response contains \"filmsCount\" property'] = responseJSON.hasOwnProperty('filmsCount');",
+                "    tests['filmsCount is an integer'] = Number.isInteger(responseJSON.filmsCount);",
+                "",
+                "    if(responseJSON.films.length){",
+                "        var film = responseJSON.films[0];",
+                "",
+                "        tests['Film has \"title\" property'] = film.hasOwnProperty('title');",
+                "        tests['Film has \"slug\" property'] = film.hasOwnProperty('slug');",
+                "        tests['Film has \"body\" property'] = film.hasOwnProperty('body');",
+                "        tests['Film has \"createdAt\" property'] = film.hasOwnProperty('createdAt');",
+                "        tests['Film\\'s \"createdAt\" property is an ISO 8601 timestamp'] = new Date(film.createdAt).toISOString() === film.createdAt;",
+                "        tests['Film has \"updatedAt\" property'] = film.hasOwnProperty('updatedAt');",
+                "        tests['Film\\'s \"updatedAt\" property is an ISO 8601 timestamp'] = new Date(film.updatedAt).toISOString() === film.updatedAt;",
+                "        tests['Film has \"description\" property'] = film.hasOwnProperty('description');",
+                "        tests['Film has \"tagList\" property'] = film.hasOwnProperty('tagList');",
+                "        tests['Film\\'s \"tagList\" property is an Array'] = Array.isArray(film.tagList);",
+                "        tests['Film has \"author\" property'] = film.hasOwnProperty('author');",
+                "        tests['Film has \"favorited\" property'] = film.hasOwnProperty('favorited');",
+                "        tests['Film has \"favoritesCount\" property'] = film.hasOwnProperty('favoritesCount');",
+                "        tests['favoritesCount is an integer'] = Number.isInteger(film.favoritesCount);",
+                "    } else {",
+                "        tests['filmsCount is 0 when feed is empty'] = responseJSON.filmsCount === 0;",
+                "    }",
+                "}",
+                ""
+              ]
+            }
+          }],
+          "request": {
+            "url": "{{apiUrl}}/films",
+            "method": "GET",
+            "header": [{
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "XMLHttpRequest",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Films by Author",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "var is200Response = responseCode.code === 200;",
+                "",
+                "tests['Response code is 200 OK'] = is200Response;",
+                "",
+                "if(is200Response){",
+                "    var responseJSON = JSON.parse(responseBody);",
+                "",
+                "    tests['Response contains \"films\" property'] = responseJSON.hasOwnProperty('films');",
+                "    tests['Response contains \"filmsCount\" property'] = responseJSON.hasOwnProperty('filmsCount');",
+                "    tests['filmsCount is an integer'] = Number.isInteger(responseJSON.filmsCount);",
+                "",
+                "    if(responseJSON.films.length){",
+                "        var film = responseJSON.films[0];",
+                "",
+                "        tests['Film has \"title\" property'] = film.hasOwnProperty('title');",
+                "        tests['Film has \"slug\" property'] = film.hasOwnProperty('slug');",
+                "        tests['Film has \"body\" property'] = film.hasOwnProperty('body');",
+                "        tests['Film has \"createdAt\" property'] = film.hasOwnProperty('createdAt');",
+                "        tests['Film\\'s \"createdAt\" property is an ISO 8601 timestamp'] = new Date(film.createdAt).toISOString() === film.createdAt;",
+                "        tests['Film has \"updatedAt\" property'] = film.hasOwnProperty('updatedAt');",
+                "        tests['Film\\'s \"updatedAt\" property is an ISO 8601 timestamp'] = new Date(film.updatedAt).toISOString() === film.updatedAt;",
+                "        tests['Film has \"description\" property'] = film.hasOwnProperty('description');",
+                "        tests['Film has \"tagList\" property'] = film.hasOwnProperty('tagList');",
+                "        tests['Film\\'s \"tagList\" property is an Array'] = Array.isArray(film.tagList);",
+                "        tests['Film has \"author\" property'] = film.hasOwnProperty('author');",
+                "        tests['Film has \"favorited\" property'] = film.hasOwnProperty('favorited');",
+                "        tests['Film has \"favoritesCount\" property'] = film.hasOwnProperty('favoritesCount');",
+                "        tests['favoritesCount is an integer'] = Number.isInteger(film.favoritesCount);",
+                "    } else {",
+                "        tests['filmsCount is 0 when feed is empty'] = responseJSON.filmsCount === 0;",
+                "    }",
+                "}",
+                ""
+              ]
+            }
+          }],
+          "request": {
+            "url": {
+              "raw": "{{apiUrl}}/films?author=johnjacob",
+              "host": [
+                "{{apiUrl}}"
+              ],
+              "path": [
+                "films"
+              ],
+              "query": [{
+                "key": "author",
+                "value": "johnjacob"
+              }],
+              "variable": []
+            },
+            "method": "GET",
+            "header": [{
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "XMLHttpRequest",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Films Favorited by Username",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "var is200Response = responseCode.code === 200;",
+                "",
+                "tests['Response code is 200 OK'] = is200Response;",
+                "",
+                "if(is200Response){",
+                "    var responseJSON = JSON.parse(responseBody);",
+                "    ",
+                "    tests['Response contains \"films\" property'] = responseJSON.hasOwnProperty('films');",
+                "    tests['Response contains \"filmsCount\" property'] = responseJSON.hasOwnProperty('filmsCount');",
+                "    tests['filmsCount is an integer'] = Number.isInteger(responseJSON.filmsCount);",
+                "",
+                "    if(responseJSON.films.length){",
+                "        var film = responseJSON.films[0];",
+                "",
+                "        tests['Film has \"title\" property'] = film.hasOwnProperty('title');",
+                "        tests['Film has \"slug\" property'] = film.hasOwnProperty('slug');",
+                "        tests['Film has \"body\" property'] = film.hasOwnProperty('body');",
+                "        tests['Film has \"createdAt\" property'] = film.hasOwnProperty('createdAt');",
+                "        tests['Film\\'s \"createdAt\" property is an ISO 8601 timestamp'] = new Date(film.createdAt).toISOString() === film.createdAt;",
+                "        tests['Film has \"updatedAt\" property'] = film.hasOwnProperty('updatedAt');",
+                "        tests['Film\\'s \"updatedAt\" property is an ISO 8601 timestamp'] = new Date(film.updatedAt).toISOString() === film.updatedAt;",
+                "        tests['Film has \"description\" property'] = film.hasOwnProperty('description');",
+                "        tests['Film has \"tagList\" property'] = film.hasOwnProperty('tagList');",
+                "        tests['Film\\'s \"tagList\" property is an Array'] = Array.isArray(film.tagList);",
+                "        tests['Film has \"author\" property'] = film.hasOwnProperty('author');",
+                "        tests['Film has \"favorited\" property'] = film.hasOwnProperty('favorited');",
+                "        tests['Film has \"favoritesCount\" property'] = film.hasOwnProperty('favoritesCount');",
+                "        tests['favoritesCount is an integer'] = Number.isInteger(film.favoritesCount);",
+                "    } else {",
+                "        tests['filmsCount is 0 when feed is empty'] = responseJSON.filmsCount === 0;",
+                "    }",
+                "}",
+                ""
+              ]
+            }
+          }],
+          "request": {
+            "url": {
+              "raw": "{{apiUrl}}/films?favorited=jane",
+              "host": [
+                "{{apiUrl}}"
+              ],
+              "path": [
+                "films"
+              ],
+              "query": [{
+                "key": "favorited",
+                "value": "jane"
+              }],
+              "variable": []
+            },
+            "method": "GET",
+            "header": [{
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "XMLHttpRequest",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Films by Tag",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "var is200Response = responseCode.code === 200;",
+                "",
+                "tests['Response code is 200 OK'] = is200Response;",
+                "",
+                "if(is200Response){",
+                "    var responseJSON = JSON.parse(responseBody);",
+                "",
+                "    tests['Response contains \"films\" property'] = responseJSON.hasOwnProperty('films');",
+                "    tests['Response contains \"filmsCount\" property'] = responseJSON.hasOwnProperty('filmsCount');",
+                "    tests['filmsCount is an integer'] = Number.isInteger(responseJSON.filmsCount);",
+                "",
+                "    if(responseJSON.films.length){",
+                "        var film = responseJSON.films[0];",
+                "",
+                "        tests['Film has \"title\" property'] = film.hasOwnProperty('title');",
+                "        tests['Film has \"slug\" property'] = film.hasOwnProperty('slug');",
+                "        tests['Film has \"body\" property'] = film.hasOwnProperty('body');",
+                "        tests['Film has \"createdAt\" property'] = film.hasOwnProperty('createdAt');",
+                "        tests['Film\\'s \"createdAt\" property is an ISO 8601 timestamp'] = new Date(film.createdAt).toISOString() === film.createdAt;",
+                "        tests['Film has \"updatedAt\" property'] = film.hasOwnProperty('updatedAt');",
+                "        tests['Film\\'s \"updatedAt\" property is an ISO 8601 timestamp'] = new Date(film.updatedAt).toISOString() === film.updatedAt;",
+                "        tests['Film has \"description\" property'] = film.hasOwnProperty('description');",
+                "        tests['Film has \"tagList\" property'] = film.hasOwnProperty('tagList');",
+                "        tests['Film\\'s \"tagList\" property is an Array'] = Array.isArray(film.tagList);",
+                "        tests['Film has \"author\" property'] = film.hasOwnProperty('author');",
+                "        tests['Film has \"favorited\" property'] = film.hasOwnProperty('favorited');",
+                "        tests['Film has \"favoritesCount\" property'] = film.hasOwnProperty('favoritesCount');",
+                "        tests['favoritesCount is an integer'] = Number.isInteger(film.favoritesCount);",
+                "    } else {",
+                "        tests['filmsCount is 0 when feed is empty'] = responseJSON.filmsCount === 0;",
+                "    }",
+                "}",
+                ""
+              ]
+            }
+          }],
+          "request": {
+            "url": {
+              "raw": "{{apiUrl}}/films?tag=dragons",
+              "host": [
+                "{{apiUrl}}"
+              ],
+              "path": [
+                "films"
+              ],
+              "query": [{
+                "key": "tag",
+                "value": "dragons"
+              }],
+              "variable": []
+            },
+            "method": "GET",
+            "header": [{
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "XMLHttpRequest",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Single Film by slug",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "var responseJSON = JSON.parse(responseBody);",
+                "",
+                "tests['Response contains \"film\" property'] = responseJSON.hasOwnProperty('film');",
+                "",
+                "var film = responseJSON.film || {};",
+                "",
+                "tests['Film has \"title\" property'] = film.hasOwnProperty('title');",
+                "tests['Film has \"slug\" property'] = film.hasOwnProperty('slug');",
+                "tests['Film has \"body\" property'] = film.hasOwnProperty('body');",
+                "tests['Film has \"createdAt\" property'] = film.hasOwnProperty('createdAt');",
+                "tests['Film\\'s \"createdAt\" property is an ISO 8601 timestamp'] = new Date(film.createdAt).toISOString() === film.createdAt;",
+                "tests['Film has \"updatedAt\" property'] = film.hasOwnProperty('updatedAt');",
+                "tests['Film\\'s \"updatedAt\" property is an ISO 8601 timestamp'] = new Date(film.updatedAt).toISOString() === film.updatedAt;",
+                "tests['Film has \"description\" property'] = film.hasOwnProperty('description');",
+                "tests['Film has \"tagList\" property'] = film.hasOwnProperty('tagList');",
+                "tests['Film\\'s \"tagList\" property is an Array'] = Array.isArray(film.tagList);",
+                "tests['Film has \"author\" property'] = film.hasOwnProperty('author');",
+                "tests['Film has \"favorited\" property'] = film.hasOwnProperty('favorited');",
+                "tests['Film has \"favoritesCount\" property'] = film.hasOwnProperty('favoritesCount');",
+                "tests['favoritesCount is an integer'] = Number.isInteger(film.favoritesCount);",
+                ""
+              ]
+            }
+          }],
+          "request": {
+            "url": "{{apiUrl}}/films/{{slug}}",
+            "method": "GET",
+            "header": [{
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "XMLHttpRequest",
+                "description": ""
+              }
+            ],
+            "body": {},
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Comments",
+      "description": "",
+      "item": [{
+          "name": "All Comments for Film",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "var is200Response = responseCode.code === 200",
+                "",
+                "tests['Response code is 200 OK'] = is200Response;",
+                "",
+                "if(is200Response){",
+                "    var responseJSON = JSON.parse(responseBody);",
+                "",
+                "    tests['Response contains \"comments\" property'] = responseJSON.hasOwnProperty('comments');",
+                "",
+                "    if(responseJSON.comments.length){",
+                "        var comment = responseJSON.comments[0];",
+                "",
+                "        tests['Comment has \"id\" property'] = comment.hasOwnProperty('id');",
+                "        tests['Comment has \"body\" property'] = comment.hasOwnProperty('body');",
+                "        tests['Comment has \"createdAt\" property'] = comment.hasOwnProperty('createdAt');",
+                "        tests['\"createdAt\" property is an ISO 8601 timestamp'] = new Date(comment.createdAt).toISOString() === comment.createdAt;",
+                "        tests['Comment has \"updatedAt\" property'] = comment.hasOwnProperty('updatedAt');",
+                "        tests['\"updatedAt\" property is an ISO 8601 timestamp'] = new Date(comment.updatedAt).toISOString() === comment.updatedAt;",
+                "        tests['Comment has \"author\" property'] = comment.hasOwnProperty('author');",
+                "    }",
+                "}",
+                ""
+              ]
+            }
+          }],
+          "request": {
+            "url": "{{apiUrl}}/films/{{slug}}/comments",
+            "method": "GET",
+            "header": [{
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "XMLHttpRequest",
+                "description": ""
+              },
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}",
+                "description": ""
+              }
+            ],
+            "body": {},
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Create Comment for Film",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "var responseJSON = JSON.parse(responseBody);",
+                "",
+                "tests['Response contains \"comment\" property'] = responseJSON.hasOwnProperty('comment');",
+                "",
+                "var comment = responseJSON.comment || {};",
+                "",
+                "tests['Comment has \"id\" property'] = comment.hasOwnProperty('id');",
+                "tests['Comment has \"body\" property'] = comment.hasOwnProperty('body');",
+                "tests['Comment has \"createdAt\" property'] = comment.hasOwnProperty('createdAt');",
+                "tests['\"createdAt\" property is an ISO 8601 timestamp'] = new Date(comment.createdAt).toISOString() === comment.createdAt;",
+                "tests['Comment has \"author\" property'] = comment.hasOwnProperty('author');",
+                ""
+              ]
+            }
+          }],
+          "request": {
+            "url": "{{apiUrl}}/films/{{slug}}/comments",
+            "method": "POST",
+            "header": [{
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "XMLHttpRequest",
+                "description": ""
+              },
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"comment\":{\"body\":\"Thank you so much!\"}}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Comment for Film",
+          "request": {
+            "url": "{{apiUrl}}/films/{{slug}}/comments/1",
+            "method": "DELETE",
+            "header": [{
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "XMLHttpRequest",
+                "description": ""
+              },
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}",
+                "description": ""
+              }
+            ],
+            "body": {},
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Profiles",
+      "description": "",
+      "item": [{
+          "name": "Profile",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "if (!(environment.isIntegrationTest)) {",
+                "var is200Response = responseCode.code === 200;",
+                "",
+                "tests['Response code is 200 OK'] = is200Response;",
+                "",
+                "if(is200Response){",
+                "    var responseJSON = JSON.parse(responseBody);",
+                "",
+                "    tests['Response contains \"profile\" property'] = responseJSON.hasOwnProperty('profile');",
+                "    ",
+                "    var profile = responseJSON.profile || {};",
+                "    ",
+                "    tests['Profile has \"username\" property'] = profile.hasOwnProperty('username');",
+                "    tests['Profile has \"image\" property'] = profile.hasOwnProperty('image');",
+                "    tests['Profile has \"following\" property'] = profile.hasOwnProperty('following');",
+                "}",
+                "}",
+                ""
+              ]
+            }
+          }],
+          "request": {
+            "url": "{{apiUrl}}/profiles/johnjacob",
+            "method": "GET",
+            "header": [{
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "XMLHttpRequest",
+                "description": ""
+              },
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}",
+                "description": ""
+              }
+            ],
+            "body": {},
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Follow Profile",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "if (!(environment.isIntegrationTest)) {",
+                "var is200Response = responseCode.code === 200;",
+                "",
+                "tests['Response code is 200 OK'] = is200Response;",
+                "",
+                "if(is200Response){",
+                "    var responseJSON = JSON.parse(responseBody);",
+                "",
+                "    tests['Response contains \"profile\" property'] = responseJSON.hasOwnProperty('profile');",
+                "    ",
+                "    var profile = responseJSON.profile || {};",
+                "    ",
+                "    tests['Profile has \"username\" property'] = profile.hasOwnProperty('username');",
+                "    tests['Profile has \"image\" property'] = profile.hasOwnProperty('image');",
+                "    tests['Profile has \"following\" property'] = profile.hasOwnProperty('following');",
+                "    tests['Profile\\'s \"following\" property is true'] = profile.following === true;",
+                "}",
+                "}",
+                ""
+              ]
+            }
+          }],
+          "request": {
+            "url": "{{apiUrl}}/profiles/johnjacob/follow",
+            "method": "POST",
+            "header": [{
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "XMLHttpRequest",
+                "description": ""
+              },
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"user\":{\"email\":\"john@jacob.com\"}}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Unfollow Profile",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "if (!(environment.isIntegrationTest)) {",
+                "var is200Response = responseCode.code === 200;",
+                "",
+                "tests['Response code is 200 OK'] = is200Response;",
+                "",
+                "if(is200Response){",
+                "    var responseJSON = JSON.parse(responseBody);",
+                "",
+                "    tests['Response contains \"profile\" property'] = responseJSON.hasOwnProperty('profile');",
+                "    ",
+                "    var profile = responseJSON.profile || {};",
+                "    ",
+                "    tests['Profile has \"username\" property'] = profile.hasOwnProperty('username');",
+                "    tests['Profile has \"image\" property'] = profile.hasOwnProperty('image');",
+                "    tests['Profile has \"following\" property'] = profile.hasOwnProperty('following');",
+                "    tests['Profile\\'s \"following\" property is false'] = profile.following === false;",
+                "}",
+                "}",
+                ""
+              ]
+            }
+          }],
+          "request": {
+            "url": "{{apiUrl}}/profiles/johnjacob/follow",
+            "method": "DELETE",
+            "header": [{
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "XMLHttpRequest",
+                "description": ""
+              },
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}",
+                "description": ""
+              }
+            ],
+            "body": {},
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Tags",
+      "description": "",
+      "item": [{
+        "name": "All Tags",
+        "event": [{
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "var is200Response = responseCode.code === 200;",
+              "",
+              "tests['Response code is 200 OK'] = is200Response;",
+              "",
+              "if(is200Response){",
+              "    var responseJSON = JSON.parse(responseBody);",
+              "    ",
+              "    tests['Response contains \"tags\" property'] = responseJSON.hasOwnProperty('tags');",
+              "    tests['\"tags\" property returned as array'] = Array.isArray(responseJSON.tags);",
+              "}",
+              ""
+            ]
+          }
+        }],
+        "request": {
+          "url": "{{apiUrl}}/tags",
+          "method": "GET",
+          "header": [{
+              "key": "Content-Type",
+              "value": "application/json",
+              "description": ""
+            },
+            {
+              "key": "X-Requested-With",
+              "value": "XMLHttpRequest",
+              "description": ""
+            }
+          ],
+          "body": {
+            "mode": "raw",
+            "raw": ""
+          },
+          "description": ""
+        },
+        "response": []
+      }]
+    },
+    {
+      "name": "Cleanup",
+      "description": "",
+      "item": [{
+        "name": "Delete Film",
+        "request": {
+          "url": "{{apiUrl}}/films/{{slug}}",
+          "method": "DELETE",
+          "header": [{
+              "key": "Content-Type",
+              "value": "application/json",
+              "description": ""
+            },
+            {
+              "key": "X-Requested-With",
+              "value": "XMLHttpRequest",
+              "description": ""
+            },
+            {
+              "key": "Authorization",
+              "value": "Token {{token}}",
+              "description": ""
+            }
+          ],
+          "body": {
+            "mode": "raw",
+            "raw": ""
+          },
+          "description": ""
+        },
+        "response": []
+      }]
+    }
+  ]
+}
