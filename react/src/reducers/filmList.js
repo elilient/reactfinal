@@ -1,6 +1,6 @@
 import {
-  ARTICLE_FAVORITED,
-  ARTICLE_UNFAVORITED,
+  FILM_FAVORITED,
+  FILM_UNFAVORITED,
   SET_PAGE,
   APPLY_TAG_FILTER,
   HOME_PAGE_LOADED,
@@ -14,8 +14,8 @@ import {
 
 export default (state = {}, action) => {
   switch (action.type) {
-    case ARTICLE_FAVORITED:
-    case ARTICLE_UNFAVORITED:
+    case FILM_FAVORITED:
+    case FILM_UNFAVORITED:
       return {
         ...state,
         films: state.films.map(film => {

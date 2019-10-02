@@ -4,7 +4,7 @@ import React from 'react';
 import agent from '../../agent';
 import { connect } from 'react-redux';
 import marked from 'marked';
-import { ARTICLE_PAGE_LOADED, ARTICLE_PAGE_UNLOADED } from '../../constants/actionTypes';
+import { FILM_PAGE_LOADED, FILM_PAGE_UNLOADED } from '../../constants/actionTypes';
 
 const mapStateToProps = state => ({
   ...state.film,
@@ -13,9 +13,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   onLoad: payload =>
-    dispatch({ type: ARTICLE_PAGE_LOADED, payload }),
+    dispatch({ type: FILM_PAGE_LOADED, payload }),
   onUnload: () =>
-    dispatch({ type: ARTICLE_PAGE_UNLOADED })
+    dispatch({ type: FILM_PAGE_UNLOADED })
 });
 
 class Film extends React.Component {

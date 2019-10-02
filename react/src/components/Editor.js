@@ -6,7 +6,7 @@ import {
   ADD_TAG,
   EDITOR_PAGE_LOADED,
   REMOVE_TAG,
-  ARTICLE_SUBMITTED,
+  FILM_SUBMITTED,
   EDITOR_PAGE_UNLOADED,
   UPDATE_FIELD_EDITOR
 } from '../constants/actionTypes';
@@ -23,7 +23,7 @@ const mapDispatchToProps = dispatch => ({
   onRemoveTag: tag =>
     dispatch({ type: REMOVE_TAG, tag }),
   onSubmit: payload =>
-    dispatch({ type: ARTICLE_SUBMITTED, payload }),
+    dispatch({ type: FILM_SUBMITTED, payload }),
   onUnload: payload =>
     dispatch({ type: EDITOR_PAGE_UNLOADED }),
   onUpdateField: (key, value) =>
@@ -37,7 +37,7 @@ class Editor extends React.Component {
     const updateFieldEvent =
       key => ev => this.props.onUpdateField(key, ev.target.value);
     this.changeTitle = updateFieldEvent('title');
-    this.changeDescription = updateFieldEvent('description');
+    this.changeDate = updateFieldEvent('date');
     this.changeBody = updateFieldEvent('body');
     this.changeTagInput = updateFieldEvent('tagInput');
 
@@ -56,7 +56,7 @@ class Editor extends React.Component {
       ev.preventDefault();
       const film = {
         title: this.props.title,
-        description: this.props.description,
+        date: this.props.date,
         body: this.props.body,
         tagList: this.props.tagList
       };
@@ -116,16 +116,16 @@ class Editor extends React.Component {
                     <input
                       className="form-control"
                       type="text"
-                      placeholder="What's this film about?"
-                      value={this.props.description}
-                      onChange={this.changeDescription} />
+                      placeholder="Release date"
+                      value={this.props.date}
+                      onChange={this.changeDate} />
                   </fieldset>
 
                   <fieldset className="form-group">
                     <textarea
                       className="form-control"
                       rows="8"
-                      placeholder="Write your film (in markdown)"
+                      placeholder="Film description"
                       value={this.props.body}
                       onChange={this.changeBody}>
                     </textarea>

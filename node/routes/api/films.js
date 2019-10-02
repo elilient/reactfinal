@@ -157,8 +157,8 @@ router.put('/:film', auth.required, function(req, res, next) {
         req.film.title = req.body.film.title;
       }
 
-      if(typeof req.body.film.description !== 'undefined'){
-        req.film.description = req.body.film.description;
+      if(typeof req.body.film.date !== 'undefined'){
+        req.film.date = req.body.film.date;
       }
 
       if(typeof req.body.film.body !== 'undefined'){

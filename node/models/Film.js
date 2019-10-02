@@ -42,7 +42,7 @@ FilmSchema.methods.toJSONFor = function(user){
   return {
     slug: this.slug,
     title: this.title,
-    description: this.description,
+    date: this.date,
     body: this.body,
     createdAt: this.createdAt,
     updatedAt: this.updatedAt,
