@@ -36,12 +36,12 @@ const FilmPreview = props => {
   return (
     <div className="film-preview">
       <div className="film-meta">
-        <Link to={`/@${film.author.username}`}>
+        <Link to={`/film/${film.slug}`}>
           <img src={film.author.image} alt={film.author.username} />
         </Link>
 
         <div className="info">
-          <Link className="author" to={`/@${film.author.username}`}>
+          <Link to={`/film/${film.slug}`}>
             {film.author.username}
           </Link>
           <span className="date">
